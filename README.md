@@ -27,4 +27,4 @@
 
 	7)	-g GETFACE, --getFace GETFACE
 
-                        To Get all faces and save from a image
+                    To Get all faces and save from a image
