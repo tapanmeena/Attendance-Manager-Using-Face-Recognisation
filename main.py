@@ -9,6 +9,9 @@ import argparse
 from matplotlib import pyplot
 from matplotlib.patches import Rectangle
 import numpy as np
+# import tensorflow as tf
+from mtcnn.mtcnn import MTCNN
+
 '''
 	For disabling warning while importing tensorflow and MTCNN
 '''
@@ -16,8 +19,6 @@ logging.disable(logging.WARNING)
 warnings.filterwarnings("ignore")
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' #For suppressing warnings.0 = all messages are logged (default behavior),1 = INFO messages are not printed,2 = INFO and WARNING messages are not printed,3 = INFO, WARNING, and ERROR messages are not printed
 
-# import tensorflow as tf
-from mtcnn.mtcnn import MTCNN
 
 #make boxes on detected faces
 def make_boxes(filename, result_list):
@@ -153,18 +154,18 @@ def argument_parse():
 	parser.add_argument('-t','--train',help='To train the model on image data',action='store_true')
 	parser.add_argument('-a','--addFace',help='To Register New Face into Database',action='store_true')
 	
-	args = parser.parse_args()
-	if args.image:
-		image_file=args.image
+	args = vars(parser.parse_args())
+	if args["image"] is not None:
+		image_file=args["image"]
 		find_face_in_image(image_file)
-	elif args.video:
-		video_file=args.video
+	elif args["video"] is not None:
+		video_file=args["video"]
 		find_face_in_video_file(video_file)
-	elif args.live:
+	elif args["live"] is True:
 		live_capture()
-	elif args.train:
+	elif args["train"] is True:
 		train_model()
-	elif args.addFace:
+	elif args["addFace"] is True:
 		Add_Face()
 	else:
 		print("No arguments given. Use -h option for list of all arguments available.")
