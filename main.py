@@ -111,7 +111,7 @@ def argument_parse():
 		video_file=args.video
 		find_face_in_video_file(video_file)
 	elif args.live:
-		print(args.live)
+		live_capture()
 	elif args.train:
 		train_model()
 	else:
