@@ -1,4 +1,4 @@
-# Work In Progress
+# Attendance using Face Recognisation
 
 ## GenerateDataSet.py
 
