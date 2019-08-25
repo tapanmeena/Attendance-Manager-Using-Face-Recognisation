@@ -1,9 +1,5 @@
 # Attendance using Face Recognisation
 
-## GenerateDataSet.py
-
-For Adding New Person Face to Database for Training the Model
-
 ## main.py
 	1) -i IMAGE, --image IMAGE
 
@@ -16,3 +12,11 @@ For Adding New Person Face to Database for Training the Model
 	3)  -c, --live    
 	
 			        To process live capture
+    
+    4)  -t, --train
+
+    				To train the model on image data
+	
+	5)	-a, --addFace
+	
+					To Register New Face into Database	
