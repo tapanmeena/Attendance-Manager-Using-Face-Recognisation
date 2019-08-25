@@ -100,7 +100,7 @@ def argument_parse():
 	parser.add_argument('-i','--image',help='To process an image file',action='store')
 	parser.add_argument('-v','--video',help='To process an video file',action='store')
 	parser.add_argument('-c','--live',help='To process live capture',action='store_true')
-	parser.add_argument('-t','--train',help='To train the model on image data',action='store_true')
+	# parser.add_argument('-t','--train',help='To train the model on image data',action='store_true')
 	
 	args = parser.parse_args()
 	if args.image:
@@ -112,8 +112,8 @@ def argument_parse():
 		find_face_in_video_file(video_file)
 	elif args.live:
 		live_capture()
-	elif args.train:
-		train_model()
+	# elif args.train:
+	# 	train_model()
 	else:
 		print("No arguments given. Use -h option for list of all arguments available.")
 
