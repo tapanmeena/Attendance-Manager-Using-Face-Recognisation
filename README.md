@@ -12,10 +12,10 @@
 	3) -c, --live    
 	
 		     To process live capture
-	4) -t , --train
+	4) -t, --train
 
                     To Train the model on image data
 		
-	5)  -a, --addFace    
+	5) -a, --addFace    
 	
 		     To Register New Face into Database
