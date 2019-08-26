@@ -73,7 +73,8 @@ def find_face_in_video_file(filename):
 	# output_movie = cv2.VideoWriter('VideoOutput/4.mp4', fourcc, 25, (640, 360))
 	while(cam.isOpened()):
 		ret, img = cam.read()
-
+		# img = cv2.transpose(img, img)
+		# img = cv2.flip(img, 1)
 		if not ret:
 			break
 		else:
@@ -98,10 +99,13 @@ def add_face_from_video_file(filename):
 
 		video = cv2.VideoCapture(filename)
 		check, frame = video.read()
+
 		detector = MTCNN()
 		photosTaken = 1
 		while(video.isOpened()):
 			check, frame = video.read()
+			frame = cv2.transpose(frame, frame)
+			frame = cv2.flip(frame, 1)
 
 			if not check:
 				break;
