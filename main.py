@@ -149,7 +149,7 @@ def add_face_from_video_file(filename):
 
 		video = cv2.VideoCapture(filename)
 		check, frame = video.read()
-
+		# frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 		detector = MTCNN()
 		photosTaken = 1
 		while(video.isOpened()):
@@ -293,18 +293,12 @@ def recognise():
 	a={0:0,1:0, 2:0, 3:0, 4:0, 5:0}
 	people={0:"nikhilesh",1:"prabhakar", 2:"tapan", 3:"rishi", 4:"rishu"}
 	abhi=None
-	#data=database()
 	e=emb()
 	fd=face()
-
-	print('attendance till now is ')
-	#data.view()
-
 	model=load_model('face_reco2.MODEL')
 
 	cap=cv2.VideoCapture(0)
 	ret=True
-	# test()
 	while ret:
 	    ret,frame=cap.read()
 	    frame=cv2.flip(frame,1)
@@ -324,7 +318,7 @@ def recognise():
 	            prediction=model.predict(feed)[0]
 
 	            result=int(np.argmax(prediction))
-	            if(np.max(prediction)>.70):
+	            if(np.max(prediction)>.90):
 	                for i in people:
 	                    if(result==i):
 	                        label=people[i]
@@ -334,13 +328,9 @@ def recognise():
 	                        abhi=i
 	            else:
 	                label='unknown'
-	            #data.update(label)
 
 
 	            cv2.putText(frame,label,(k[0],k[1]),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,255),2)
-	            # if(abhi is not None):
-	            #     if(a[abhi]==1):
-	            #         cv2.putText(frame,"your attendance is complete",(x,y-30),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2)
 	            cv2.rectangle(frame,(k[0],k[1]),(k[0]+k[2],k[1]+k[3]),(252,160,39),3)
 	            cv2.imshow('onlyFace',f)
 	    cv2.imshow('frame',frame)
@@ -348,7 +338,6 @@ def recognise():
 	        break
 	cap.release()
 	cv2.destroyAllWindows()
-
 
 def argument_parse():
 	parser = argparse.ArgumentParser(description='Attendence Manager using face detection')
@@ -359,8 +348,9 @@ def argument_parse():
 	parser.add_argument('-a','--addFace',help='To Register New Face into Database',action='store_true')
 	parser.add_argument('-av','--addFaceVideo',help='To Register New Face from Video file into Database',action='store')
 	parser.add_argument('-g','--getFace',help='To Get all faces in a image',action='store')
-	parser.add_argument('-p','--predict',help='To Prdict person from live capture',action='store_true')
-	
+	parser.add_argument('-p','--predict',help='To Predict person from live capture',action='store_true')
+	# parser.add_argument('-pi','--recon',help='Some Shit just give a image to it',action='store')
+
 	args = parser.parse_args()
 	if args.image:
 		image_file=args.image
@@ -382,9 +372,85 @@ def argument_parse():
 		add_face_from_video_file(video_file)
 	elif args.predict:
 		recognise()
+	# elif args.recon:
+	# 	image_file = args.recon
+	# 	recognise_image(image_file)
 	else:
 		print("No arguments given. Use -h option for list of all arguments available.")
 
 if __name__ == '__main__':
 	argument_parse()
-	# GenDataSet()
+
+
+# def recognise_image(filename):
+# 	# detector = MTCNN()
+# 	frame = pyplot.imread(filename)
+
+# 	# faces = detector.detect_faces(image)
+
+# 	# det = []
+# 	# coor = []
+
+# 	# for result in faces:
+# 	# 	x, y, w, h = result['box']
+# 	# 	det.append(image[y:y+h, x:x+w])
+# 	# 	coor.append([x,y,w,h])
+
+# 	# if(det is not None):
+# 	# 	for i in range(len(det)):
+# 	# 		detected
+# 	label=None
+# 	a={0:0,1:0, 2:0, 3:0, 4:0}
+# 	people={0:"tapan",1:"prabhakar", 2:"rishi", 3:"rishu"}
+# 	abhi=None
+# 	e=emb()
+# 	fd=face()
+
+# 	model=load_model('face_reco2.MODEL')
+
+# 	# cap=cv2.VideoCapture(0)
+# 	# ret=True
+# 	# test()
+# 	# while ret:
+#     # ret, frame=cap.read()
+# 	frame = cv2.flip(frame,1)
+# 	# frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+# 	det,coor=fd.detectFace(frame)
+# 	print("Start")
+# 	if(det is not None):
+# 		for i in range(len(det)):
+# 			detected=det[i]
+# 			k=coor[i]
+# 			f=detected
+# 			detected=cv2.resize(detected,(160,160))
+# 			#detected=np.rollaxis(detected,2,0)
+# 			detected=detected.astype('float')/255.0
+# 			detected=np.expand_dims(detected,axis=0)
+# 			feed=e.calculate(detected)
+# 			feed=np.expand_dims(feed,axis=0)
+# 			prediction=model.predict(feed)[0]
+
+# 			result=int(np.argmax(prediction))
+# 			if(np.max(prediction)>.90):
+# 			    for i in people:
+# 			        if(result==i):
+# 			            label=people[i]
+# 			            if(a[i]==0):
+# 			                print("a")
+# 			            a[i]=1
+# 			            abhi=i
+# 			else:
+# 			    label='unknown'
+
+
+# 			cv2.putText(frame,label,(k[0],k[1]),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,255),2)
+# 			cv2.rectangle(frame,(k[0],k[1]),(k[0]+k[2],k[1]+k[3]),(252,160,39),3)
+# 			cv2.imshow('onlyFace',f)
+# 	print("end")
+# 	cv2.imshow('frame',frame)
+# 	cv2.waitKey(10000)
+# 	# if(cv2.waitKey(1) & 0XFF==ord('q')):
+# 	# 	exit(5)
+# 	#     # break
+# 	# cap.release()
+# 	cv2.destroyAllWindows()
